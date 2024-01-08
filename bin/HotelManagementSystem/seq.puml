@@ -1,0 +1,58 @@
+@startuml
+
+actor person
+
+activate HotelManager
+activate Room
+HotelManager -> Room : Room object creation
+activate Reservation
+HotelManager -> Reservation : Reservation object creation
+loop n times
+    
+    HotelManager --> person :  Choose option from menu
+    alt 1. Check-in
+        person -> HotelManager : 1) Check-in
+        HotelManager -> Reservation : Check-in
+        Reservation -> person : Display available rooms
+        Reservation --> person : Enter room number to check in
+        person -> Reservation : Room number entered
+        Reservation -> Room : Find the room
+        alt If room found
+            Reservation -> Room : Make it occupied
+        else If room not found
+            Reservation -> person : Room not found
+        end
+    end
+
+    HotelManager --> person :  Choose option from menu
+    alt 2. Check-out
+        person -> HotelManager : 2) Check-out
+        HotelManager -> Reservation : Check-out
+        Reservation --> person : Enter room number to check out
+        person -> Reservation : Room number entered
+        Reservation -> Room : Find the room
+        alt If room found
+            Reservation -> Room : Make it not occupied
+        else If room not found
+            Reservation -> person : Room not found
+        end
+    end
+
+    HotelManager --> person :  Choose option from menu
+    alt 3. Display available Rooms
+        person -> HotelManager : 3) Display available Rooms
+        Reservation -> Room : Find the room
+        alt If room not occupied
+            Reservation -> person : Print the room
+        end
+    end
+
+    HotelManager --> person :  Choose option from menu
+    alt 4. Exit
+        person -> HotelManager : 4) Exit from the system
+
+    end
+end
+
+
+@enduml

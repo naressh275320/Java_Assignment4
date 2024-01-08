@@ -1,0 +1,38 @@
+@startuml
+
+actor person
+
+activate InventoryManagerState
+activate ProductState
+InventoryManagerState -> ProductState : Product object creation
+activate WareHouseState
+InventoryManagerState -> WareHouseState : WareHouse object creation
+loop n times
+    InventoryManagerState --> person :  Choose option from menu
+    alt 1. Load Products
+        person -> InventoryManagerState : 1) Load products 
+        InventoryManagerState -> WareHouseState : Product details and qunatity
+        WareHouseState -> WareHouseState : Update product quantity details
+    end
+
+    InventoryManagerState --> person :  Choose option from menu
+    alt 2. Sell Products
+        person -> InventoryManagerState : 2) Sell products 
+        InventoryManagerState -> WareHouseState : Product details and qunatity
+        WareHouseState -> WareHouseState : Update product quantity details
+    end
+
+    InventoryManagerState --> person :  Choose option from menu
+    alt 3. Display available Products
+        person -> InventoryManagerState : 3) Display available Products 
+        InventoryManagerState -> ProductState : Print available products and their quantity
+    end
+
+    InventoryManagerState --> person :  Choose option from menu
+    alt 3. Exit System
+        person -> InventoryManagerState : 4) Exiting the menu
+    end
+end
+
+
+@enduml

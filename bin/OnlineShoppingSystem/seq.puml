@@ -1,0 +1,72 @@
+@startuml
+
+actor person
+
+activate OnlineShopping
+
+OnlineShopping --> person : Enter name
+person -> OnlineShopping : Name enterd
+OnlineShopping --> person : Enter id
+person -> OnlineShopping : ID enterd
+
+activate Customer
+OnlineShopping -> Customer : Customer object created with user details
+activate Product
+OnlineShopping -> Product : Product object creation
+activate ShoppingCart
+OnlineShopping -> ShoppingCart : Shopping cart object creation
+
+loop n times
+    OnlineShopping --> person :  Choose option from menu
+    alt
+        person -> OnlineShopping : 1)Do shopping
+        ShoppingCart --> person :  Enter category
+        alt
+            person -> ShoppingCart : 1)Tshirt selected
+            alt
+                OnlineShopping --> person :  Enter Tshirt model code
+                person -> ShoppingCart : 1)Code entered
+                ShoppingCart -> ShoppingCart : Product added to cart
+            end
+            
+            person -> ShoppingCart : 2)Pant selected
+            alt
+                OnlineShopping --> person :  Enter Pant model code
+                person -> ShoppingCart : 1)Code entered
+                ShoppingCart -> ShoppingCart : Product added to cart
+            end
+            
+            person -> ShoppingCart : 3)Shoe selected
+            alt
+                OnlineShopping --> person :  Enter Shoe model code
+                person -> ShoppingCart : 1)Code entered
+                ShoppingCart -> ShoppingCart : Product added to cart
+            end
+        end
+    end
+    
+    alt
+        person -> OnlineShopping : 2)Remove products from cart
+        ShoppingCart -> person : Print products in the cart
+        ShoppingCart --> person : Ask the user if any products has to be removed
+        person -> ShoppingCart : Enter the product code to remove
+        ShoppingCart -> Product : Find the prodcut with product code
+        ShoppingCart -> ShoppingCart : Remove the product from cart   
+    end
+
+    alt
+        person -> OnlineShopping : 2)View Products from cart
+        OnlineShopping -> ShoppingCart : Get the products in cart
+        ShoppingCart -> person : Display the products in cart
+    end
+
+    alt
+        person -> OnlineShopping : Exit the system
+        OnlineShopping -> person : Log-Out
+    end
+end
+
+OnlineShopping -> person : Printing the total cost of the products in cart
+OnlineShopping -> person : Displaying the products ordered
+
+@enduml
